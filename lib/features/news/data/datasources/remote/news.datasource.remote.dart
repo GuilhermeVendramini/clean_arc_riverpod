@@ -3,17 +3,18 @@ import 'dart:convert';
 import 'package:clean_arq_riverpod/features/news/domain/entities/news/news.entity.dart';
 import 'package:dartz/dartz.dart';
 
+import '../../../../../core/domain/services/http_service.dart';
 import '../news.datasource.dart';
 import 'package:http/http.dart' as http;
 
 class NewsDataSourceRemote implements NewsDataSource {
-  final http.Client client;
+  final HttpService client;
 
   NewsDataSourceRemote(this.client);
 
   @override
   Future<Either<Exception, List<NewsEntity>>> getNews() async {
-    final response = await client.get(
+    final http.Response response = await client.get(
       Uri(path: 'https://jsonplaceholder.typicode.com/posts'),
       headers: {
         'Content-Type': 'application/json',
@@ -29,7 +30,7 @@ class NewsDataSourceRemote implements NewsDataSource {
 
   @override
   Future<Either<Exception, NewsEntity>> getNewsById(String id) async {
-    final response = await client.get(
+    final http.Response response = await client.get(
       Uri.parse(
         'https://jsonplaceholder.typicode.com/posts/$id',
       ),

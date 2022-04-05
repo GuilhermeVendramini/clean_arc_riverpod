@@ -1,13 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart' as http;
 
+import '../../../core/providers/core.providers.dart';
 import '../data/datasources/news.datasource.dart';
 import '../data/datasources/remote/news.datasource.remote.dart';
 import '../data/repositories/news.data.repository.dart';
 
 final Provider<NewsDataSource> newsDataSourceRemoteProvider =
     Provider<NewsDataSource>(
-  (ref) => NewsDataSourceRemote(http.Client()),
+  (ref) => NewsDataSourceRemote(ref.read(coreHttpServiceProvider)),
 );
 
 final Provider<NewsDataRepository> newsDataRepositoryProvider =

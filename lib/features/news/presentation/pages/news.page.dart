@@ -7,6 +7,10 @@ import '../../providers/get_news_by_id/states/news.get_news_by_id.state.dart';
 class NewsPage extends StatelessWidget {
   const NewsPage({Key? key}) : super(key: key);
 
+  void callAction(WidgetRef ref, String id) {
+    ref.read(newsGetNewsByIdeNotifierProvider.notifier).getNewsById(id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,17 +42,13 @@ class NewsPage extends StatelessWidget {
                   if (state is NewsGetNewsByIdStateDone) Text(state.news.title),
                   ElevatedButton(
                     onPressed: () {
-                      ref
-                          .read(newsGetNewsByIdeNotifierProvider.notifier)
-                          .getNewsById('1');
+                      callAction(ref, '1');
                     },
                     child: const Text('Get news by ID 1'),
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      ref
-                          .read(newsGetNewsByIdeNotifierProvider.notifier)
-                          .getNewsById('-');
+                      callAction(ref, '-');
                     },
                     child: const Text('Get news with error'),
                   ),
